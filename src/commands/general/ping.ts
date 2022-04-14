@@ -1,4 +1,5 @@
 import { Command } from "@sapphire/framework";
+import { Time } from "@sapphire/time-utilities";
 import { Message, MessageEmbed } from "discord.js";
 import { BOT_GLOBAL_RGB_COLOR, BOT_IDLE_RGB_COLOR } from "../../config/config";
 
@@ -8,9 +9,13 @@ export class PingCommand extends Command {
       ...options,
       aliases: ["pong", "latency"],
       description: "Pong!",
-      fullCategory: ["general"]
+      fullCategory: ["general"],
+      cooldownDelay: Time.Second * 5,
+      cooldownLimit: 1
     });
   }
+
+  
 
   public async messageRun(message: Message): Promise<Message> {
     const currentDate = Date.now();

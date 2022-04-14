@@ -1,5 +1,6 @@
 import { SapphireClient } from "@sapphire/framework";
 import { BOT_PREFIX } from "../config/config";
+import { Time } from "@sapphire/time-utilities";
 
 export class BotClient extends SapphireClient {
   public constructor() {
@@ -24,9 +25,13 @@ export class BotClient extends SapphireClient {
             name: "v2.0.0"
           }
         ]
+      },
+      defaultCooldown: {
+        delay: Time.Second * 1,
+        limit: 1,
       }
     });
-  }  // end constructor
+  }
 
   public override login(token?: string): Promise<string> {
     return super.login(token);

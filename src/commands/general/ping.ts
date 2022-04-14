@@ -15,8 +15,6 @@ export class PingCommand extends Command {
     });
   }
 
-  
-
   public async messageRun(message: Message): Promise<Message> {
     const currentDate = Date.now();
     const heartbeat = (currentDate - message.createdTimestamp);

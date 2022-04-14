@@ -3,7 +3,7 @@ import { Message, MessageEmbed } from "discord.js";
 import { BOT_GLOBAL_RGB_COLOR } from "../../config/config";
 import { parseMS } from "../../utils/utils";
 
-export class PingCommand extends Command {
+export class BotStatsCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
     super(context, {
       ...options,

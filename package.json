@@ -1,0 +1,13 @@
+{
+  "name": "kirito-bot-ts",
+  "version": "2.0.0",
+  "description": "Typescript version",
+  "main": "dist/index.js",
+  "repository": "https://github.com/GitScorz/kirito-bot-ts.git",
+  "author": "Scorz",
+  "license": "MIT",
+  "dependencies": {
+    "@sapphire/framework": "^2.4.1",
+    "discord.js": "^13.6.0"
+  }
+}

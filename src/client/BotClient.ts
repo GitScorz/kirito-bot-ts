@@ -1,5 +1,5 @@
 import { SapphireClient } from "@sapphire/framework";
-import { BOT_PREFIX } from "../config/config";
+import { BOT_PREFIX, BOT_PRESENCE } from "../config/config";
 import { Time } from "@sapphire/time-utilities";
 
 export class BotClient extends SapphireClient {
@@ -17,15 +17,7 @@ export class BotClient extends SapphireClient {
         "GUILD_MEMBER"
       ],
       defaultPrefix: BOT_PREFIX,
-      presence: {
-        status: "online",
-        activities: [ 
-          {
-            type: "WATCHING",
-            name: "v2.0.0"
-          }
-        ]
-      },
+      presence: BOT_PRESENCE,
       defaultCooldown: {
         delay: Time.Second * 1,
         limit: 1,

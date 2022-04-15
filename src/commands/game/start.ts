@@ -15,19 +15,15 @@ export class StartCommand extends Command {
 
   public async messageRun(message: Message, args: Args): Promise<Message> {
     const user = message.author;
-    let emptyName = false;  // Check if the name is empty
-
     const char = await Character.findOne({ userId: user.id });
 
     if (char) {
       return ErrorEmbed(message.channel, user, "You already have a character!");
     }
 
-    let name: any = await args.rest('string').catch(() => {
-      emptyName = true;
-    });
+    let name: any = await args.rest("string").catch(() => null);
 
-    if (emptyName) {
+    if (!name) {
       return ErrorEmbed(message.channel, user, "You need to specify a name!");
     }
 

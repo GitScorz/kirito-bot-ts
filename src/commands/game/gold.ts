@@ -23,7 +23,7 @@ export class GoldCommand extends Command {
 
     const embed = new MessageEmbed()
       .setDescription(`**${user.username}**, you currently have **${char.gold}** gold!`)
-      .setColor(BOT_GLOBAL_RGB_COLOR)
+      .setColor(BOT_GLOBAL_RGB_COLOR);
     
     return message.channel.send({ embeds: [embed] });
   }

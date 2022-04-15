@@ -1,6 +1,6 @@
 import { TextChannel, User, MessageEmbed, DMChannel, PartialDMChannel, NewsChannel, ThreadChannel } from "discord.js";
 
-export function parseMS(ms: number) { // Parse milliseconds to a human readable string
+export function ParseMS(ms: number) { // Parse milliseconds to a human readable string
   const seconds = Math.floor(ms / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);

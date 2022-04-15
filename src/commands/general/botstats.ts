@@ -1,7 +1,7 @@
 import { Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
 import { BOT_GLOBAL_RGB_COLOR } from "../../config/config";
-import { parseMS } from "../../utils/utils";
+import { ParseMS } from "../../utils/utils";
 
 export class BotStatsCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
@@ -25,7 +25,7 @@ export class BotStatsCommand extends Command {
         name: "Application Stats",
       })
       .setColor(BOT_GLOBAL_RGB_COLOR)
-      .addField("🕝 Uptime", `\`${parseMS(this.container.client.uptime)}\``, true)
+      .addField("🕝 Uptime", `\`${ParseMS(this.container.client.uptime)}\``, true)
       .addField("😊 Users", `\`${users}\``, true)
       .addField("🖥️ Guilds", `\`${this.container.client.guilds.cache.size}\``, true)
       .addField("📰 Channels", `\`${this.container.client.channels.cache.size}\``, true)

@@ -21,7 +21,7 @@ export class GoldCommand extends Command {
       return message.channel.send("You don't have a character!");
     }
 
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
       .setDescription(`**${user.username}**, you currently have **${char.gold}** gold!`)
       .setColor(BOT_GLOBAL_RGB_COLOR)
     

@@ -62,7 +62,7 @@ export class StartCommand extends Command {
       msg += `\nYou got **${500}** gems.`;
       msg += `\nYou can join in an alliance with the command \`k!alliance\`.`;
 
-      let embed = new MessageEmbed()
+      const embed = new MessageEmbed()
         .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
         .setTitle("Your character has been created!")
         .setDescription(msg)

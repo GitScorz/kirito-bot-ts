@@ -25,7 +25,7 @@ export class BotStatsCommand extends Command {
     const characters = (await Character.find({})).length;
     const clans = (await Clan.find({})).length;
 
-    let embed = new MessageEmbed()
+    const embed = new MessageEmbed()
       .setAuthor({
         name: "Application Stats",
       })

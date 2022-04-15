@@ -7,6 +7,7 @@ export class GoldCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
     super(context, {
       ...options,
+      aliases: ["balance", "bal"],
       description: "See you current gold!",
       fullCategory: ["game"],
     });

@@ -17,7 +17,7 @@ export class DailyCommand extends Command {
     const user = message.author;
 
     const char: ICharacter = await Character.findOne({ userId: user.id });
-    if (!char) return ErrorEmbed(message.channel, user, "You don't have a character!");
+    if (!char) return ErrorEmbed(message.channel, user, "you don't have a character!");
 
     const cooldown = 8.64e+7;
     const health = char.health;

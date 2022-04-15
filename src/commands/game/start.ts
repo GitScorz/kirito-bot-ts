@@ -18,22 +18,22 @@ export class StartCommand extends Command {
     const char = await Character.findOne({ userId: user.id });
 
     if (char) {
-      return ErrorEmbed(message.channel, user, "You already have a character!");
+      return ErrorEmbed(message.channel, user, "you already have a character!");
     }
 
     let name: string = await args.rest("string").catch(() => null);
 
     if (!name) {
-      return ErrorEmbed(message.channel, user, "You need to specify a name!");
+      return ErrorEmbed(message.channel, user, "you need to specify a name!");
     }
 
     const charName = await Character.findOne({ name: name });
     if (charName) {
-      return ErrorEmbed(message.channel, user, "That name is already taken!");
+      return ErrorEmbed(message.channel, user, "that name is already taken!");
     }
 
     if (name.length > 20) {
-      return ErrorEmbed(message.channel, user, "Your name must be 20 characters or less!");
+      return ErrorEmbed(message.channel, user, "your name must be 20 characters or less!");
     }
 
     try {  // Create the character

@@ -36,26 +36,40 @@ export class StartCommand extends Command {
       return ErrorEmbed(message.channel, user, "Your name must be 20 characters or less!");
     }
 
-
     try {  // Create the character
       Character.create({
         userId: user.id,
         name: name,
         gold: 2000,
-        troops: 200,
         health: 100,
+        shield: 0,
         gems: 500,
-        alliance: "None",
-        potionEffect: "None",
-        wins: 0,
-        loss: 0,
-        matches: 0
+        level: 1,
+        exp: 0,
+        inventory: {
+          items: [{}],
+        },
+        daily: {
+          lastClaimed: 0,
+          claimed: false,
+        },
+        equipment: {
+          head: "",
+          chest: "",
+          legs: "",
+          feet: "",
+          weapon: "",
+        },
+        skills: [{}],
+        quests: [{}],
+        achievements: [{}],
+        createdAt: new Date(),
       });
 
       let msg = `Your character is named **${name}**.`;
       msg += `\nYou got **${2000}** gold.`;
-      msg += `\nYou got **${200}** troops.`;
       msg += `\nYou got **${500}** gems.`;
+      msg += `\nYou can check your profile with the command \`k!profile\`.`;
       msg += `\nYou can join in an alliance with the command \`k!alliance\`.`;
 
       const embed = new MessageEmbed()

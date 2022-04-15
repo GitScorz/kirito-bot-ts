@@ -1,6 +1,6 @@
 import { Command } from "@sapphire/framework";
 import { Time } from "@sapphire/time-utilities";
-import { Message, MessageEmbed } from "discord.js";
+import { CommandInteraction, Message, MessageEmbed } from "discord.js";
 import { BOT_GLOBAL_RGB_COLOR, BOT_IDLE_RGB_COLOR } from "../../config/Config";
 
 export class PingCommand extends Command {
@@ -16,9 +16,6 @@ export class PingCommand extends Command {
   }
 
   public async messageRun(message: Message): Promise<Message> {
-    const currentDate = Date.now();
-    const heartbeat = (currentDate - message.createdTimestamp);
-
     const calculatingEmbed = new MessageEmbed()
       .setDescription("Calculating..")
       .setColor(BOT_IDLE_RGB_COLOR)
@@ -29,7 +26,6 @@ export class PingCommand extends Command {
     const apiLatency = Math.round(this.container.client.ws.ping);
 
     let msg = `\nLatency » \`${latency}ms\``;
-    // msg += `\nHeartbeat » \`${heartbeat}ms\``;
     msg += `\nAPI Latency » \`${apiLatency}ms\``;
 
     const pongEmbed = new MessageEmbed()

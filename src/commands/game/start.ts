@@ -1,8 +1,8 @@
 import { Args, Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
-import { ErrorEmbed } from "../../utils/utils";
+import { ErrorEmbed } from "../../utils/Utils";
 import Character from '../../schemas/Character';
-import { BOT_GLOBAL_RGB_COLOR } from "../../config/config";
+import { BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
 
 export class StartCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {

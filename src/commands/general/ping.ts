@@ -1,7 +1,7 @@
 import { Command } from "@sapphire/framework";
 import { Time } from "@sapphire/time-utilities";
 import { Message, MessageEmbed } from "discord.js";
-import { BOT_GLOBAL_RGB_COLOR, BOT_IDLE_RGB_COLOR } from "../../config/config";
+import { BOT_GLOBAL_RGB_COLOR, BOT_IDLE_RGB_COLOR } from "../../config/Config";
 
 export class PingCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {

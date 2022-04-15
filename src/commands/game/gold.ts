@@ -1,6 +1,6 @@
 import { Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
-import { BOT_GLOBAL_RGB_COLOR } from "../../config/config";
+import { BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
 import Character from "../../schemas/Character";
 
 export class GoldCommand extends Command {

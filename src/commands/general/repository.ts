@@ -1,6 +1,6 @@
 import { Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
-import { BOT_INVISIBLE_RGB_COLOR } from "../../config/config";
+import { BOT_INVISIBLE_RGB_COLOR } from "../../config/Config";
 
 export class DailyCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {

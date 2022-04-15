@@ -1,9 +1,9 @@
 import { Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
-import { BOT_GLOBAL_RGB_COLOR } from "../../config/config";
+import { BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
 import Character from "../../schemas/Character";
 import Clan from "../../schemas/Clan";
-import { ParseMS } from "../../utils/utils";
+import { ParseMS } from "../../utils/Utils";
 
 export class BotStatsCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {

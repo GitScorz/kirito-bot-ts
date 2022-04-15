@@ -1,5 +1,5 @@
 import { SapphireClient } from "@sapphire/framework";
-import { BOT_PREFIX, BOT_PRESENCE } from "../config/config";
+import { BOT_PREFIX, BOT_PRESENCE } from "../config/Config";
 import { Time } from "@sapphire/time-utilities";
 
 export class BotClient extends SapphireClient {

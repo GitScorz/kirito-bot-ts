@@ -46,7 +46,12 @@ export class StartCommand extends Command {
         gems: 500,
         level: 1,
         exp: 0,
-        inventory: [{}],
+        inventory: [
+          {
+            id: "welcome_book",
+            amount: 1,
+          }
+        ],
         daily: {
           claimed: false,
         },
@@ -64,8 +69,8 @@ export class StartCommand extends Command {
       });
 
       let msg = `Your character is named **${name}**.`;
-      msg += `\nYou got **${2000}** gold.`;
-      msg += `\nYou got **${500}** gems.`;
+      msg += `\nYou got **${2000}** <:gold:851858239284969473>.`;
+      msg += `\nYou got **${500}** <:gem:964979628349485126>.`;
       msg += `\nYou can check your profile with the command \`k!profile\`.`;
       msg += `\nYou can join in an alliance with the command \`k!alliance\`.`;
 

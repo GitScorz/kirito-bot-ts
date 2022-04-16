@@ -14,7 +14,6 @@ interface ICharacter {
   };
   inventory: {
     id: string;
-    name: string;
     amount: number;
   }[];
   skills: {
@@ -37,4 +36,16 @@ interface ICharacter {
       progress: number;
   }[];
   createdAt: number;
+}
+
+interface IItem {
+  [id: string]: {
+    name: string;
+    description: string;
+    type: "weapon" | "shield" | "book" | "misc";
+    price: number;
+    damage?: number;
+    durability?: number;
+    usable?: boolean;
+  };
 }

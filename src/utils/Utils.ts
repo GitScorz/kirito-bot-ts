@@ -1,4 +1,6 @@
 import { TextChannel, User, MessageEmbed, DMChannel, PartialDMChannel, NewsChannel, ThreadChannel } from "discord.js";
+import { BOT_ERROR_RGB_COLOR } from "../config/Config";
+import Items from "./Items";
 
 export function ParseMS(ms: number) { // Parse milliseconds to a human readable string
   const seconds = Math.floor(ms / 1000);
@@ -15,7 +17,43 @@ export function ParseMS(ms: number) { // Parse milliseconds to a human readable 
 export function ErrorEmbed(channel: TextChannel | DMChannel | PartialDMChannel | NewsChannel | ThreadChannel, user: User, message: string) {  // Create an error embed
   const err = new MessageEmbed()
     .setDescription(`**${user.username}**, ${message}`)
-    .setColor([255, 0, 0]);
+    .setColor(BOT_ERROR_RGB_COLOR);
 
   return channel.send({ embeds: [err] });
+}
+
+export function GetDisplayName(itemId: string) { // Get the display name of an item
+  let name;
+
+  Object.keys(Items).forEach(function(key) {
+    if (key == itemId) {
+      name = Items[key].name;
+    }
+  });
+
+  return name;
+}
+
+export function GetItemProperties(itemId: string) {  // Get the properties of an item
+  let properties;
+
+  Object.keys(Items).forEach(function(key) {
+    if (key == itemId) {
+      properties = Items[key];
+    }
+  });
+
+  return properties;
+}
+
+export function IsValidItem(itemId: string) { // Check if an item is valid
+  let isValid = false;
+
+  Object.keys(Items).forEach(function(key) {
+    if (key === itemId) {
+      isValid = true
+    }
+  });
+
+  return isValid;
 }

@@ -29,10 +29,7 @@ export class PingCommand extends Command {
     msg += `\nAPI Latency » \`${apiLatency}ms\``;
 
     const pongEmbed = new MessageEmbed()
-      .setAuthor({
-        name: "Latency!",
-        iconURL: this.container.client.user.displayAvatarURL({ format: "png", dynamic: true })
-      })
+      .setTitle("Pong! 🏓")
       .setDescription(msg)
       .setColor(BOT_GLOBAL_RGB_COLOR)
       .setTimestamp();

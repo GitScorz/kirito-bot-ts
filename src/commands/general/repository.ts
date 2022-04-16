@@ -1,6 +1,6 @@
 import { Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
-import { BOT_INVISIBLE_RGB_COLOR } from "../../config/Config";
+import { BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
 
 export class DailyCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
@@ -13,12 +13,10 @@ export class DailyCommand extends Command {
   }
 
   public async messageRun(message: Message): Promise<Message> {
-    const embed = new MessageEmbed().setAuthor({ 
-      name: "Kirito's repository", 
-      iconURL: this.container.client.user.displayAvatarURL({ format: "png", dynamic: true })
-    })
+    const embed = new MessageEmbed()
+    .setTitle("Kirito's repository")
     .setDescription(`[**Click here to go to the repository**](https://github.com/GitScorz/kirito-bot-ts)`)
-    .setColor(BOT_INVISIBLE_RGB_COLOR);
+    .setColor(BOT_GLOBAL_RGB_COLOR);
     
     return message.channel.send({ embeds: [embed] });
   }

@@ -1,6 +1,6 @@
 import { Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
-import { BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
+import { BOT_ERROR_RGB_COLOR, BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
 import Character from "../../schemas/Character";
 import { ErrorEmbed, ParseMS } from "../../utils/Utils";
 
@@ -39,10 +39,7 @@ export class DailyCommand extends Command {
       }
 
       const embed = new MessageEmbed()
-        .setAuthor({ 
-          name: `Daily Reward`,
-          iconURL: user.displayAvatarURL() 
-        })
+        .setTitle("Daily Reward")
         .setDescription(msg)
         .setColor(BOT_GLOBAL_RGB_COLOR);
 
@@ -63,11 +60,8 @@ export class DailyCommand extends Command {
         const timeLeft = ParseMS(cooldown - (now - lastClaimed));
 
         const embed = new MessageEmbed()
-          .setAuthor({ 
-            name: `Daily Reward`,
-            iconURL: user.displayAvatarURL() 
-          })
-          .setColor([255, 0, 0])
+          .setTitle("Daily Reward")
+          .setColor(BOT_ERROR_RGB_COLOR)
           .setDescription(`You already claimed the daily reward!\nYou can claim again in \`${timeLeft}\`!`);
 
         return message.channel.send({ embeds: [embed] });
@@ -83,10 +77,7 @@ export class DailyCommand extends Command {
           } 
 
           let embed = new MessageEmbed()
-            .setAuthor({ 
-              name: `Daily Reward`,
-              iconURL: user.displayAvatarURL() 
-            })
+            .setTitle("Daily Reward")
             .setDescription(msg)
             .setColor(BOT_GLOBAL_RGB_COLOR)
 

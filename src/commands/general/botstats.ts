@@ -26,9 +26,7 @@ export class BotStatsCommand extends Command {
     const clans = (await Clan.find({})).length;
 
     const embed = new MessageEmbed()
-      .setAuthor({
-        name: "Application Stats",
-      })
+      .setTitle("Application Stats")
       .setColor(BOT_GLOBAL_RGB_COLOR)
       .addField("🕝 Uptime", `\`${ParseMS(this.container.client.uptime)}\``, true)
       .addField("😊 Users", `\`${users}\``, true)

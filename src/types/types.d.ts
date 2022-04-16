@@ -13,11 +13,10 @@ interface ICharacter {
     claimed: boolean;
   };
   inventory: {
-      items: {
-          id: string;
-          amount: number;
-      }[];
-  };
+    id: string;
+    name: string;
+    amount: number;
+  }[];
   skills: {
       id: string;
       level: number;
@@ -37,5 +36,5 @@ interface ICharacter {
       id: string;
       progress: number;
   }[];
-  createdAt: Date;
+  createdAt: number;
 }

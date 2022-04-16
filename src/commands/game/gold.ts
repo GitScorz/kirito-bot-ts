@@ -2,6 +2,7 @@ import { Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
 import { BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
 import Character from "../../schemas/Character";
+import { ErrorEmbed } from "../../utils/Utils";
 
 export class GoldCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
@@ -16,9 +17,9 @@ export class GoldCommand extends Command {
   public async messageRun(message: Message): Promise<Message> {
     const user = message.author;
 
-    const char = await Character.findOne({ userId: user.id });
+    const char: ICharacter = await Character.findOne({ userId: user.id });
     if (!char) {
-      return message.channel.send("You don't have a character!");
+      return ErrorEmbed(message.channel, user, "you don't have a character!");
     }
 
     const embed = new MessageEmbed()

@@ -24,18 +24,18 @@ export class DailyCommand extends Command {
     const gold = char.gold;
     const now = Date.now();
 
-    const lastClaimed = char.daily.lastClaimed
+    const lastClaimed = char.daily?.lastClaimed;
     const claimed = char.daily.claimed;
 
     if (!claimed) {  // This is the first time claiming
       const randomGold = Math.floor(Math.random() * 100) + 25;
       const healthReward = (health === 100) ? 0 : 25;
       
-      let msg = "You claimed your daily reward!"
-      msg += `\n\n» **+${randomGold}**<:gold:851858239284969473>`
+      let msg = "You claimed your daily reward!";
+      msg += `\n\n» **+${randomGold}**<:gold:851858239284969473>`;
 
       if (healthReward === 25) {
-          msg += "\n» **+25**<:life_hp:853288570113359872>"
+          msg += "\n» **+25**<:life_hp:853288570113359872>";
       }
 
       const embed = new MessageEmbed()
@@ -44,12 +44,12 @@ export class DailyCommand extends Command {
           iconURL: user.displayAvatarURL() 
         })
         .setDescription(msg)
-        .setColor(BOT_GLOBAL_RGB_COLOR)
+        .setColor(BOT_GLOBAL_RGB_COLOR);
 
-      await Character.findOneAndUpdate({ userId: user.id }, { 
+      await Character.updateOne({ userId: user.id }, { 
         $set: {
           gold: gold + randomGold,
-          health: healthReward,
+          health: health + healthReward,
           daily: { 
             lastClaimed: now,
             claimed: true 
@@ -75,11 +75,11 @@ export class DailyCommand extends Command {
           const randomGold = Math.floor(Math.random() * 100) + 25;
           const healthReward = (health === 100) ? 0 : 25;
 
-          let msg = "You claimed your daily reward!"
-          msg += `\n\n» **+${randomGold}**<:gold:851858239284969473>`
+          let msg = "You claimed your daily reward!";
+          msg += `\n\n» **+${randomGold}**<:gold:851858239284969473>`;
 
           if (healthReward === 25) {
-              msg += "\n» **+25**<:life_hp:853288570113359872>"
+              msg += "\n» **+25**<:life_hp:853288570113359872>";
           } 
 
           let embed = new MessageEmbed()
@@ -92,17 +92,17 @@ export class DailyCommand extends Command {
 
           message.channel.send({ embeds: [embed] });
 
-          await Character.findOneAndUpdate({ userId: user.id }, { 
+          await Character.updateOne({ userId: user.id }, { 
             $set: {
               gold: gold + randomGold,
-              health: healthReward,
-              daily: { 
+              health: health + healthReward,
+              daily: {
                 lastClaimed: now,
                 claimed: true 
               }
             } 
           });
-      }
+        }
     }
   }
 }

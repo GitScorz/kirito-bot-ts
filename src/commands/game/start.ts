@@ -37,7 +37,7 @@ export class StartCommand extends Command {
     }
 
     try {  // Create the character
-      Character.create({
+      await Character.create({
         userId: user.id,
         name: name,
         gold: 2000,
@@ -46,11 +46,8 @@ export class StartCommand extends Command {
         gems: 500,
         level: 1,
         exp: 0,
-        inventory: {
-          items: [{}],
-        },
+        inventory: [{}],
         daily: {
-          lastClaimed: 0,
           claimed: false,
         },
         equipment: {
@@ -63,7 +60,7 @@ export class StartCommand extends Command {
         skills: [{}],
         quests: [{}],
         achievements: [{}],
-        createdAt: new Date(),
+        createdAt: Date.now(),
       });
 
       let msg = `Your character is named **${name}**.`;

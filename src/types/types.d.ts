@@ -42,12 +42,13 @@ interface IItems {
   [id: string]: {
     name: string;
     description: string;
-    type: "weapon" | "shield" | "book" | "misc";
+    type: "weapon" | "shield" | "book" | "potion" | "spell" | "util" | "misc";
     inShop: boolean;
     usable: boolean;
     price?: number;
     damage?: number;
     durability?: number;
+    image?: string;
     // effect?: (character: ICharacter) => void;
     onUse: (character: ICharacter) => void;
   };
@@ -56,10 +57,11 @@ interface IItems {
 interface IItem {
   name: string;
   description: string;
-  type: "weapon" | "shield" | "book" | "misc";
+  type: "weapon" | "shield" | "book" | "potion" | "spell" | "util" | "misc";
   price: number;
   damage: number;
   durability: number;
   usable: boolean;
+  image: string;
   onUse: (character: ICharacter) => void;
 }

@@ -41,7 +41,7 @@ export class InventoryCommand extends Command {
         return message.channel.send({ embeds: [noItemsMessage] });
       }
 
-      let msg = "Open crates by using `k!crates`\nIf you want to use some item do `k!inventory use <item_name>`\n\n";
+      let msg = "Open crates by using `k!crates`\nIf you want to use some item do `k!inventory use <item_name>`\nSee item's information with `k!inventory info <item_name>`\n\n";
       msg += "**__Items__**\n";
       msg += inventory.map(i => `» **${GetDisplayName(i.id)}** (${i.amount})`).join("\n");
 
@@ -54,7 +54,7 @@ export class InventoryCommand extends Command {
       return message.channel.send({ embeds: [invMessage] });
     }
 
-    if (option === "use") {
+    if (option.toLowerCase() === "use") {
       if (!item) {  // No item specified
         let msg = "you need to specify an item!";
         msg += "\nUse `k!inventory use <item_name>`";
@@ -178,6 +178,52 @@ export class InventoryCommand extends Command {
       }
       
       itemProperties.onUse(char);
+    }
+
+    if (option.toLowerCase() === "info") {
+      if (!item) {  // No item specified
+        let msg = "you need to specify an item!";
+        msg += "\nUse `k!inventory info <item_name>`";
+
+        return ErrorEmbed(message.channel, user, msg);
+      }
+
+      item = item.toLowerCase();  // Make sure the item is lowercase
+
+      const itemReg = item.replace(/\s/g, '_'); // Replace spaces with _
+
+      if (!IsValidItem(itemReg)) {  // Check if the item is valid
+        return ErrorEmbed(message.channel, user, "that item doesn't exists!");
+      }
+
+      let itemProperties = GetItemProperties(itemReg);
+      let itemType = itemProperties.type;
+
+      let msg = `Name: \`${itemProperties.name}\``;
+      msg += `\nUsable: \`${itemProperties.usable ? "Yes" : "No"}\``;
+
+      if (itemType === "weapon" || itemType === "shield" || itemType === "potion" || itemType === "spell" || itemType === "misc") {
+        msg += `\nDamage: \`${itemProperties.damage || "None"}\``;
+      }
+
+      msg += `\nPrice: \`${itemProperties.price || "None"}\``;
+
+      let itemTypeCapitalized = itemType.charAt(0).toUpperCase() + itemType.slice(1);
+
+      msg += `\nType: \`${itemTypeCapitalized}\``;
+      msg += `\n\n**__Description__**\n`;
+      msg += itemProperties.description || "No description available.";
+
+      let infoEmbed = new MessageEmbed()
+        .setTitle(`📘 Item Information`)
+        .setColor(BOT_GLOBAL_RGB_COLOR)
+        .setDescription(msg);
+
+      if (itemProperties.image) {
+        infoEmbed.setThumbnail(itemProperties.image);
+      }
+
+      message.channel.send({ embeds: [infoEmbed] });
     }
   }
 }

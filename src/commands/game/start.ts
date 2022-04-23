@@ -21,7 +21,7 @@ export class StartCommand extends Command {
       return ErrorEmbed(message.channel, user, "you already have a character!");
     }
 
-    let name: string = await args.rest("string").catch(() => null);
+    const name: string = await args.rest("string").catch(() => null);
 
     if (!name) {
       return ErrorEmbed(message.channel, user, "you need to specify a name!");

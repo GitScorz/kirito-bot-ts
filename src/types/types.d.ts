@@ -35,6 +35,7 @@ interface ICharacter {
       id: string;
       progress: number;
   }[];
+  clanId: string;
   createdAt: number;
 }
 

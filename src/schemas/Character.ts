@@ -31,6 +31,7 @@ const CharacterSchema = new mongoose.Schema({
   skills: mongoose.SchemaTypes.Array,
   quests: mongoose.SchemaTypes.Array,
   achievements: mongoose.SchemaTypes.Array,
+  clanId: mongoose.SchemaTypes.String,
   createdAt: mongoose.SchemaTypes.Number,
 });
 

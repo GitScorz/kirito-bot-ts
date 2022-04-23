@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv';
 import mongoose from "mongoose";
 dotenv.config();
 
+console.log(`NodeJS Version: ${process.version}`);
+
 mongoose
   .connect(process.env.MONGO_URI) // Connect to our database
   .then(() => {

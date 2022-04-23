@@ -104,7 +104,7 @@ export class InventoryCommand extends Command {
         );
         
         let pages = [
-          "Hello there **" + user.username + "**, this is a little guide that i made to help you!\nIf you like the bot and want to help the developer give some suggestions using `k!suggest`\n\nYou can continue reading pressing the arrow buttons!",
+          `Hello there **${user.username}**, this is a little guide that i made to help you!\nIf you like the bot and want to help the developer give some suggestions using \`k!suggest\`\n\nYou can continue reading pressing the arrow buttons!`,
           "I presume it's your first time, so you need to know a couple of things to start your adventure!\n\nFirst, you can buy some items in `k!shop`, maybe a fishing rod to get some gold..",
           "You can fight with other players over Discord using `k!match` and win trophies and get into the `k!leaderboard`.",
           "If you like magic you can use the `k!spells` command to see all the spells you can use and `k!potions` to see what each potion does.",

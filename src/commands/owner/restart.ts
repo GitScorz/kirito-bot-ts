@@ -13,7 +13,7 @@ export class EvalCommand extends Command {
 
   public async messageRun(message: Message) {
     let started = Date.now();
-    this.container.logger.info(`[WARNING] - BOT IS RESTARTING AS REQUESTED BY ${message.author.username.toUpperCase()}`);
+    this.container.logger.info(`[WARNING] - BOT RESTART AS BEEN REQUESTED BY ${message.author.username.toUpperCase()}`);
     
     message.channel.send({ content: ':recycle: ***Restarting...***' }).then(() => this.container.client.destroy())
     .then(() => this.container.client.login(process.env.TOKEN));

@@ -69,11 +69,14 @@ export class StartCommand extends Command {
       });
 
       let msg = `Your character is named **${name}**.`;
-      msg += `\nYou got **${2000}** <:gold:851858239284969473>.`;
-      msg += `\nYou got **${500}** <:gem:964979628349485126>.`;
-      msg += `\nYou can check your profile with the command \`k!profile\`.`;
-      msg += `\nYou can join in an alliance with the command \`k!alliance\`.`;
-
+      msg += `\nYou are goin to start with \`${2000}\` <:gold:851858239284969473> and \`${500}\` <:gem:964979628349485126>.`;
+      msg += `\n\n__**Other stats:**__`;
+      msg += `\nHealth: \`${100}/${100}\` <:life_hp:853288570113359872>`;
+      msg += `\nShield: \`${0}\` :shield:`;
+      msg += `\nLevel: \`${1}\``;
+      msg += `\nExp: \`${0}\``;
+      msg += `\n\nYou can check your profile with the command \`k!profile\`.`;
+      
       const embed = new MessageEmbed()
         .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
         .setTitle("Your character has been created!")

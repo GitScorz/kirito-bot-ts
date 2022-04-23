@@ -23,8 +23,8 @@ export class GoldCommand extends Command {
     }
 
     const embed = new MessageEmbed()
-      .setTitle(`${user.username}'s Gold`)
-      .setDescription(`You currently have **${char.gold}** <:gold:851858239284969473>!\nSpend it on items or equipment with \`k!shop\``)
+      .setTitle(`Gold`)
+      .setDescription(`You currently have **${char.gold}** <:gold:851858239284969473>\nSpend it on items or equipment with \`k!shop\`.`)
       .setColor(BOT_GLOBAL_RGB_COLOR);
     
     return message.channel.send({ embeds: [embed] });

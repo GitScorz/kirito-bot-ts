@@ -38,14 +38,28 @@ interface ICharacter {
   createdAt: number;
 }
 
-interface IItem {
+interface IItems {
   [id: string]: {
     name: string;
     description: string;
     type: "weapon" | "shield" | "book" | "misc";
-    price: number;
+    inShop: boolean;
+    usable: boolean;
+    price?: number;
     damage?: number;
     durability?: number;
-    usable?: boolean;
+    // effect?: (character: ICharacter) => void;
+    onUse: (character: ICharacter) => void;
   };
+}
+
+interface IItem {
+  name: string;
+  description: string;
+  type: "weapon" | "shield" | "book" | "misc";
+  price: number;
+  damage: number;
+  durability: number;
+  usable: boolean;
+  onUse: (character: ICharacter) => void;
 }

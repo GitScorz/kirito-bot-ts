@@ -2,7 +2,7 @@ import { TextChannel, User, MessageEmbed, DMChannel, PartialDMChannel, NewsChann
 import { BOT_ERROR_RGB_COLOR } from "../config/Config";
 import Items from "./Items";
 
-export function ParseMS(ms: number) { // Parse milliseconds to a human readable string
+export function ParseMS(ms: number): string { // Parse milliseconds to a human readable string
   const seconds = Math.floor(ms / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
@@ -16,13 +16,14 @@ export function ParseMS(ms: number) { // Parse milliseconds to a human readable 
 
 export function ErrorEmbed(channel: TextChannel | DMChannel | PartialDMChannel | NewsChannel | ThreadChannel, user: User, message: string) {  // Create an error embed
   const err = new MessageEmbed()
+    .setTitle("Error")
     .setDescription(`**${user.username}**, ${message}`)
     .setColor(BOT_ERROR_RGB_COLOR);
 
   return channel.send({ embeds: [err] });
 }
 
-export function GetDisplayName(itemId: string) { // Get the display name of an item
+export function GetDisplayName(itemId: string): string { // Get the display name of an item
   let name;
 
   Object.keys(Items).forEach(function(key) {
@@ -34,7 +35,7 @@ export function GetDisplayName(itemId: string) { // Get the display name of an i
   return name;
 }
 
-export function GetItemProperties(itemId: string) {  // Get the properties of an item
+export function GetItemProperties(itemId: string): IItem {  // Get the properties of an item
   let properties;
 
   Object.keys(Items).forEach(function(key) {
@@ -46,7 +47,7 @@ export function GetItemProperties(itemId: string) {  // Get the properties of an
   return properties;
 }
 
-export function IsValidItem(itemId: string) { // Check if an item is valid
+export function IsValidItem(itemId: string): boolean { // Check if an item is valid
   let isValid = false;
 
   Object.keys(Items).forEach(function(key) {

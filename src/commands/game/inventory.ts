@@ -1,8 +1,8 @@
-import { Command } from "@sapphire/framework";
+import { Args, Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
 import { BOT_ERROR_RGB_COLOR, BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
 import Character from "../../schemas/Character";
-import { ErrorEmbed, GetDisplayName } from "../../utils/Utils";
+import { ErrorEmbed, GetDisplayName, GetItemProperties, IsValidItem } from "../../utils/Utils";
 
 export class InventoryCommand extends Command {
   public constructor(context: Command.Context, options: Command.Options) {
@@ -14,38 +14,119 @@ export class InventoryCommand extends Command {
     });
   }
 
-  public async messageRun(message: Message): Promise<Message> {
+  public async messageRun(message: Message, args: Args): Promise<Message> {
     const user = message.author;
 
     const char: ICharacter = await Character.findOne({ userId: user.id });
     if (!char) {
       return ErrorEmbed(message.channel, user, "you don't have a character!");
     }
-    
+
     const inventory = char.inventory;
+    const option: string = await args.pick('string').catch(() => null);
 
-    if (!inventory) {
-      const noItemsMessage = new MessageEmbed()
-        .setAuthor({
-          name: `${user.username}'s Inventory`,
-          iconURL: user.displayAvatarURL({ dynamic: true })
-        })
-        .setDescription("You don't have any items on your inventory, buy some with `k!shop`.")
-        .setColor(BOT_ERROR_RGB_COLOR);
+    let item: string = await args.rest('string').catch(() => null);
+    let remove = false;
+    
+    if (!option) {
+      if (!inventory) {  // No items on inventory
+        const noItemsMessage = new MessageEmbed()
+          .setTitle(`${user.username}'s Inventory`)
+          .setDescription("You don't have any items on your inventory, buy some with `k!shop`.")
+          .setColor(BOT_ERROR_RGB_COLOR);
 
-      return message.channel.send({ embeds: [noItemsMessage] });
+        return message.channel.send({ embeds: [noItemsMessage] });
+      }
+
+      let msg = "Open crates by using `k!crates`\nIf you want to use some item do `k!inventory use <item_name>`\n\n";
+      msg += "**__Items__**\n";
+      msg += inventory.map(i => `» **${GetDisplayName(i.id)}** (${i.amount})`).join("\n");
+
+      const invMessage = new MessageEmbed()
+        .setTitle(`${user.username}'s Inventory`)
+        .setColor(BOT_GLOBAL_RGB_COLOR)
+        .setDescription(msg)
+        .setThumbnail(user.displayAvatarURL({ dynamic: true }));
+
+      return message.channel.send({ embeds: [invMessage] });
     }
 
-    let msg = "Open crates by using `k!crates`\nIf you want to use some item do `k!inventory use <item_name>`\n\n";
-    msg += "**__Items__**\n";
-    msg += inventory.map(i => `» **${GetDisplayName(i.id)}** (${i.amount})`).join("\n");
+    if (option === "use") {
+      if (!item) {  // No item specified
+        let msg = "you need to specify an item!";
+        msg += "\nUse `k!inventory use <item_name>`";
+        msg += "\n\n**__Items__**\n";
+        msg += (inventory.length > 0) 
+          ? inventory.map(i => `» **${GetDisplayName(i.id)}** (${i.amount})`).join("\n") 
+          : "You don't have any items on your inventory, buy some with `k!shop`.";
 
-    const invMessage = new MessageEmbed()
-      .setTitle(`${user.username}'s Inventory`)
-      .setColor(BOT_GLOBAL_RGB_COLOR)
-      .setDescription(msg)
-      .setThumbnail(user.displayAvatarURL({ dynamic: true }));
+        return ErrorEmbed(message.channel, user, msg);
+      }
 
-    return message.channel.send({ embeds: [invMessage] });
+      item = item.toLowerCase();  // Make sure the item is lowercase
+
+      const itemMessage = new MessageEmbed().setTitle(`${user.username}'s Inventory`).setColor(BOT_GLOBAL_RGB_COLOR);;
+
+      const itemReg = item.replace(/\s/g, '_'); // Replace spaces with _
+      const usedItem = inventory.find(i => i.id === itemReg); // Find the item in the inventory
+
+      if (!IsValidItem(itemReg)) {
+        return ErrorEmbed(message.channel, user, "that item doesn't exists!");
+      }
+
+      if (!usedItem) {  // Item not found
+        return ErrorEmbed(message.channel, user, "you don't have that item!");
+      }
+
+      if (usedItem.amount <= 0) {  // Double check if has the item
+        return ErrorEmbed(message.channel, user, "you don't have that item!");
+      }
+
+      let itemProperties = GetItemProperties(usedItem.id);
+
+      if (!itemProperties.usable) {
+        return ErrorEmbed(message.channel, user, "that item can't be used!");
+      }
+
+      // Items that can be used
+      
+      if (usedItem.id == "welcome_book") {
+        itemMessage.setDescription("You have opened the welcome book!");
+      }
+
+      if (usedItem.id == "test") {
+        itemMessage.setDescription("You have opened the welcome book!");
+        remove = true;
+      }
+
+      // End of items that can be used
+      
+      if (remove) { // Remove items from inventory
+        if (usedItem.amount === 1) {
+          Character.updateOne({ userId: user.id }, {
+            $pull: {
+              inventory: {
+                id: usedItem.id
+              }
+            }
+          }).exec();
+        } else {
+          Character.updateOne(
+            { 
+              userId: user.id,
+              "inventory.id": usedItem.id
+            }, 
+            { $set: 
+              {
+                "inventory.$.amount": usedItem.amount - 1,
+              }
+            }
+          ).exec();
+        }
+      }
+      
+      itemProperties.onUse(char);
+      return message.channel.send({ embeds: [itemMessage] });
+    }
   }
 }

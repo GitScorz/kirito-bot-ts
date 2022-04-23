@@ -1,5 +1,6 @@
 import { Args, Command } from "@sapphire/framework";
-import { Message, MessageEmbed } from "discord.js";
+import { Time } from "@sapphire/time-utilities";
+import { ButtonInteraction, Interaction, Message, MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
 import { BOT_ERROR_RGB_COLOR, BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
 import Character from "../../schemas/Character";
 import { ErrorEmbed, GetDisplayName, GetItemProperties, IsValidItem } from "../../utils/Utils";
@@ -11,6 +12,8 @@ export class InventoryCommand extends Command {
       aliases: ["inv", "items"],
       description: "See your current inventory!",
       fullCategory: ["game"],
+      cooldownDelay: Time.Second * 5,
+      cooldownLimit: 1
     });
   }
 
@@ -65,12 +68,10 @@ export class InventoryCommand extends Command {
 
       item = item.toLowerCase();  // Make sure the item is lowercase
 
-      const itemMessage = new MessageEmbed().setTitle(`${user.username}'s Inventory`).setColor(BOT_GLOBAL_RGB_COLOR);;
-
       const itemReg = item.replace(/\s/g, '_'); // Replace spaces with _
       const usedItem = inventory.find(i => i.id === itemReg); // Find the item in the inventory
 
-      if (!IsValidItem(itemReg)) {
+      if (!IsValidItem(itemReg)) {  // Check if the item is valid
         return ErrorEmbed(message.channel, user, "that item doesn't exists!");
       }
 
@@ -91,12 +92,63 @@ export class InventoryCommand extends Command {
       // Items that can be used
       
       if (usedItem.id == "welcome_book") {
-        itemMessage.setDescription("You have opened the welcome book!");
-      }
+        const row = new MessageActionRow().addComponents(
+          new MessageButton()
+            .setCustomId("left_btn")
+            .setStyle('SECONDARY')
+            .setEmoji('⬅️'),
+          new MessageButton()
+            .setCustomId('right_btn')
+            .setStyle('SECONDARY')
+            .setEmoji('➡️'),
+        );
+        
+        let pages = [
+          "Hello there **" + user.username + "**, this is a little guide that i made to help you!\nIf you like the bot and want to help the developer give some suggestions using `k!suggest`\n\nYou can continue reading pressing the arrow buttons!",
+          "I presume it's your first time, so you need to know a couple of things to start your adventure!\n\nFirst, you can buy some items in `k!shop`, maybe a fishing rod to get some gold..",
+          "You can fight with other players over Discord using `k!match` and win trophies and get into the `k!leaderboard`.",
+          "If you like magic you can use the `k!spells` command to see all the spells you can use and `k!potions` to see what each potion does.",
+          "Are you alone? Join the other players clan using `k!clans` to find one.",
+          "This bot is completely free, if you want to support the developer you can use `k!donate` to donate to the developer.\n\nThanks for using the bot!",
+        ];
 
-      if (usedItem.id == "test") {
-        itemMessage.setDescription("You have opened the welcome book!");
-        remove = true;
+        let page = 1;
+
+        let embed = new MessageEmbed()
+          .setTitle(`📙 Welcome Book`)
+          .setColor(BOT_GLOBAL_RGB_COLOR)
+          .setDescription(pages[0])
+          .setFooter({ text: `Page ${page} of ${pages.length}` });
+
+        let msg = await message.channel.send({ embeds: [embed], components: [row] });
+
+        const filter = (btnInt: Interaction) => {
+          return user.id === btnInt.user.id;
+        };
+
+        const collector = message.channel.createMessageComponentCollector({
+          filter,
+          time: 60 * 1000,  // 1 minute
+        });
+
+        collector.on('collect', (i: ButtonInteraction) => {
+          i.deferUpdate()
+          if (i.customId === 'left_btn') {
+            if (page > 1) {
+              page--;
+              embed.setDescription(pages[page - 1]);
+              embed.setFooter({ text: `Page ${page} of ${pages.length}` });
+              msg.edit({ embeds: [embed] });
+            }
+          } else if (i.customId === 'right_btn') {
+            if (page < pages.length) {
+              page++;
+              embed.setDescription(pages[page - 1]);
+              embed.setFooter({ text: `Page ${page} of ${pages.length}` });
+              msg.edit({ embeds: [embed] });
+            }
+          }
+        });
       }
 
       // End of items that can be used
@@ -126,7 +178,6 @@ export class InventoryCommand extends Command {
       }
       
       itemProperties.onUse(char);
-      return message.channel.send({ embeds: [itemMessage] });
     }
   }
 }

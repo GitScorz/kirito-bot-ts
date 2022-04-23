@@ -6,16 +6,7 @@ Items["welcome_book"] = {
   description: "A book that tells you how to start your adventure!",
   inShop: false,
   usable: true,
-  onUse: (character: ICharacter) => {}
-}
-
-Items["test"] = {
-  name: "testi testi",
-  type: "misc",
-  description: "testttttttttttttttttt",
-  inShop: false,
-  usable: true,
-  onUse: (character: ICharacter) => {}
+  onUse: (character) => {}
 }
 
 export default Items;

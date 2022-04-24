@@ -69,7 +69,7 @@ export class StartCommand extends Command {
       });
 
       let msg = `Your character is named **${name}**.`;
-      msg += `\nYou are goin to start with \`${2000}\` <:gold:851858239284969473> and \`${500}\` <:gem:964979628349485126>.`;
+      msg += `\nYou are going to start with \`${2000}\` <:gold:851858239284969473> and \`${500}\` <:gem:964979628349485126>.`;
       msg += `\n\n__**Other stats:**__`;
       msg += `\nHealth: \`${100}/${100}\` <:life_hp:853288570113359872>`;
       msg += `\nShield: \`${0}\` :shield:`;

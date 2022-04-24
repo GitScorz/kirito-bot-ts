@@ -16,6 +16,9 @@ const CharacterSchema = new mongoose.Schema({
   gems: mongoose.SchemaTypes.Number,
   level: mongoose.SchemaTypes.Number,
   exp: mongoose.SchemaTypes.Number,
+  matches: mongoose.SchemaTypes.Number,
+  wins: mongoose.SchemaTypes.Number,
+  losses: mongoose.SchemaTypes.Number,
   inventory: mongoose.SchemaTypes.Array,
   daily: {
     lastClaimed: mongoose.SchemaTypes.Number,

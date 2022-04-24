@@ -8,6 +8,8 @@ interface ICharacter {
   level: number;
   exp: number;
   gold: number;
+  wins: number,
+  losses: number,
   daily: {
     lastClaimed: number;
     claimed: boolean;

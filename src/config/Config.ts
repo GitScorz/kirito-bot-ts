@@ -23,4 +23,7 @@ export const BOT_PRESENCE: PresenceData = {
   ]
 };
 
-export const BOT_CLAN_MEMBER_LIMIT: number = 10;
+// CLANS
+
+export const CLAN_GEM_COST: number = 45;
+export const CLAN_MEMBER_LIMIT: number = 10;

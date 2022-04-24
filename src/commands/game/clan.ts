@@ -1,6 +1,6 @@
 import { Args, Command } from "@sapphire/framework";
 import { Message, MessageEmbed } from "discord.js";
-import { BOT_GLOBAL_RGB_COLOR } from "../../config/Config";
+import { CLAN_MEMBER_LIMIT, BOT_GLOBAL_RGB_COLOR, CLAN_GEM_COST } from "../../config/Config";
 import Character from "../../schemas/Character";
 import Clan from "../../schemas/Clan";
 import { BLACKLISTED_WORDS, ErrorEmbed } from "../../utils/Utils";
@@ -43,7 +43,7 @@ export class BotStatsCommand extends Command {
     }
 
     if (option.toLowerCase() === "create") {
-      if (char?.clanId) return ErrorEmbed(message.channel, user, "you already have a clan!");
+      if (char?.clanId) return ErrorEmbed(message.channel, user, "you are in a clan!");
 
       const clanData: string = await args.rest('string').catch(() => null);
       if (!clanData) return ErrorEmbed(message.channel, user, "you need to provide a clan name and description!\nDo \`k!clan create <name>, <description>\`\n:warning: **YOU NEED TO SEPARATE WITH A COMMA!**");
@@ -52,7 +52,7 @@ export class BotStatsCommand extends Command {
 
       if (!clanName) return ErrorEmbed(message.channel, user, "you need to specify a clan name!");
 
-      if (char.gold < 750) return ErrorEmbed(message.channel, user, "you need **750** <:gold:851858239284969473> to create a clan!");
+      if (char.gems < CLAN_GEM_COST) return ErrorEmbed(message.channel, user, `you need **${CLAN_GEM_COST}** <:gem:964979628349485126> to create a clan!`);
       if (clanName.length > 18) return ErrorEmbed(message.channel, user, "clan name is too long!");
 
       const clan = await Clan.findOne({ name: clanName });
@@ -82,7 +82,7 @@ export class BotStatsCommand extends Command {
 
         await Character.updateOne({ userId: user.id }, { 
           $set: { 
-            gold: char.gold - 750,
+            gems: char.gems - CLAN_GEM_COST,
             clanId: query._id.toString()
           },
         });
@@ -103,6 +103,55 @@ export class BotStatsCommand extends Command {
         .setTimestamp();
 
       return message.channel.send({ embeds: [clanEmbed] });
+    }
+    
+    if (option.toLowerCase() === "join") {
+      if (char?.clanId) return ErrorEmbed(message.channel, user, "you are in a clan!");
+
+      const clanName: string = await args.rest('string').catch(() => null);
+      if (!clanName) return ErrorEmbed(message.channel, user, "you need to specify a clan name!\nSee the clan list with \`k!clan list\`");
+
+      const clan: IClan = await Clan.findOne({ name: clanName });
+      if (!clan) return ErrorEmbed(message.channel, user, "that clan doesn't exist make sure you typed right!");
+
+      let wins = char.wins;
+      let clanUsers = clan.members.length;
+      let clanState = clan.open;
+      let clanMinimumWins = clan.minimumWins;
+
+      if (!clanState) {
+        return ErrorEmbed(message.channel, user, "that clan is closed!");
+      }
+
+      if (clanUsers === CLAN_MEMBER_LIMIT) {
+        return ErrorEmbed(message.channel, user, "that clan is full!");
+      }
+
+      if (clanMinimumWins > wins) {
+        return ErrorEmbed(message.channel, user, "you need `" + clanMinimumWins + "` wins to join that clan!");
+      }
+
+      try {
+        await Clan.updateOne({ _id: clan._id }, {
+          $push: { members: user.id },
+        });
+
+        await Character.updateOne({ userId: user.id }, {
+          $set: { 
+            clanId: clan._id.toString() 
+          },
+        });
+
+      } catch (err) {
+        console.log(err);
+        return ErrorEmbed(message.channel, user, "something went wrong!");
+      }
+      
+      const joinEmbed = new MessageEmbed()
+        .setTitle("Clan Joined!")
+        .setDescription(`You just joined in **${clanName}**, to get an overview of the clan do \`k!clan overview\``)
+        .setColor(BOT_GLOBAL_RGB_COLOR)
+      return message.channel.send({ embeds: [joinEmbed] });
     }
   }
 }

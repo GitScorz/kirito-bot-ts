@@ -66,3 +66,16 @@ interface IItem {
   image: string;
   onUse: (character: ICharacter) => void;
 }
+
+interface IClan {
+  _id: string;
+  name: string;
+  description: string;
+  members: string[];
+  minimumWins: number;
+  open: boolean;
+  level: number;
+  ownerId: string;
+  createdAt: number;
+  updatedAt: number;
+}

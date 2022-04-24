@@ -58,3 +58,23 @@ export function IsValidItem(itemId: string): boolean { // Check if an item is va
 
   return isValid;
 }
+
+export const BLACKLISTED_WORDS = [ // List of blacklisted words
+  "fuck",
+  "fuckers",
+  "shit",
+  "ass",
+  "asses",
+  "dicks",
+  "cocks",
+  "pussy",
+  "pussys",
+  "nigger",
+  "niggers",
+  "nigga",
+  "niggas",
+  "bitch",
+  "bitches",
+  "nazi",
+  "nazis",
+]; 

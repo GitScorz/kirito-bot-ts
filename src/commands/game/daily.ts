@@ -41,7 +41,8 @@ export class DailyCommand extends Command {
       const embed = new MessageEmbed()
         .setTitle("Daily Reward")
         .setDescription(msg)
-        .setColor(BOT_GLOBAL_RGB_COLOR);
+        .setColor(BOT_GLOBAL_RGB_COLOR)
+        .setTimestamp();
 
       await Character.updateOne({ userId: user.id }, { 
         $set: {
@@ -80,6 +81,7 @@ export class DailyCommand extends Command {
             .setTitle("Daily Reward")
             .setDescription(msg)
             .setColor(BOT_GLOBAL_RGB_COLOR)
+            .setTimestamp();
 
           message.channel.send({ embeds: [embed] });
 

@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 const ClanSchema = new mongoose.Schema({
   name: mongoose.SchemaTypes.String,
   description: mongoose.SchemaTypes.String,
-  members: mongoose.SchemaTypes.Number,
+  members: mongoose.SchemaTypes.Array,
   minimumWins: mongoose.SchemaTypes.Number,
-  open: mongoose.SchemaTypes.String,
-  owner: mongoose.SchemaTypes.String,
-  createdAt: mongoose.SchemaTypes.Number
+  open: mongoose.SchemaTypes.Boolean,
+  level: mongoose.SchemaTypes.Number,
+  ownerId: mongoose.SchemaTypes.String,
+  createdAt: mongoose.SchemaTypes.Number,
+  updatedAt: mongoose.SchemaTypes.Number
 });
 
 export default mongoose.model('Clan', ClanSchema);

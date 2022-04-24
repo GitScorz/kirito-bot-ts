@@ -196,7 +196,7 @@ export class BotStatsCommand extends Command {
       );
 
       if (clan.ownerId === user.id) {  // If you are clan owner
-        if (clan.members.length === 1) {
+        if (clan.members.length === 1) { // If clan has only one member
           const leaveEmbed = new MessageEmbed()
             .setTitle("Delete clan?")
             .setDescription("Are you sure you want to leave your clan and delete it?\nThis action cannot be undone!")
@@ -211,7 +211,7 @@ export class BotStatsCommand extends Command {
           const collector = message.channel.createMessageComponentCollector({
             filter,
             max: 1,
-            time: 15 * 1000,  // 1 minute
+            time: 15 * 1000,  // 15 seconds
           });
   
           collector.on('collect', async (i: ButtonInteraction) => {
@@ -236,7 +236,7 @@ export class BotStatsCommand extends Command {
               msg.edit({ embeds: [leaveEmbed] });
             }
           });
-        } else {
+        } else {  // If clan has more than one member
           const leaveEmbed = new MessageEmbed()
             .setTitle("Transfer Ownership?")
             .setDescription("Are you sure you want to leave the clan and transfer ownership?\nThis action cannot be undone!")
@@ -251,7 +251,7 @@ export class BotStatsCommand extends Command {
           const collector = message.channel.createMessageComponentCollector({
             filter,
             max: 1,
-            time: 15 * 1000,  // 1 minute
+            time: 15 * 1000,  // 15 seconds
           });
   
           collector.on('collect', async (i: ButtonInteraction) => {
@@ -287,7 +287,7 @@ export class BotStatsCommand extends Command {
             }
           });
         }
-      } else { // Members
+      } else { // If you are a member
         const leaveEmbed = new MessageEmbed()
           .setTitle("Leave Clan?")
           .setDescription("Are you sure you want to leave the clan?")
@@ -302,7 +302,7 @@ export class BotStatsCommand extends Command {
         const collector = message.channel.createMessageComponentCollector({
           filter,
           max: 1,
-          time: 15 * 1000,  // 1 minute
+          time: 15 * 1000,  // 15 seconds
         });
 
         collector.on('collect', async (i: ButtonInteraction) => {

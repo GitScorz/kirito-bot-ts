@@ -24,7 +24,7 @@ export class BotStatsCommand extends Command {
 
     if (!option) {
       if (!char?.clanId) {
-        let noClanEmbed = new MessageEmbed()
+        const noClanEmbed = new MessageEmbed()
           .setTitle("Clans")
 					.setDescription(`Hey **${user.username}**, it looks like you don't have a clan join one with \`k!clan join <name>\`\nYou see all the clans through \`k!clan list\`\n\nWanna create your own clan, do \`k!clan create <name>, <description>\`\n:warning: **YOU NEED TO SEPARATE WITH A COMMA!**`)
 					.setColor(BOT_GLOBAL_RGB_COLOR);
@@ -45,7 +45,7 @@ export class BotStatsCommand extends Command {
         msg += `\n\nYou can manage your clan with \`k!clan manage\``;
       }
 
-      let clanEmbed = new MessageEmbed()
+      const clanEmbed = new MessageEmbed()
         .setTitle("Clan Overview")
         .setDescription(msg)
         .setColor(BOT_GLOBAL_RGB_COLOR);
@@ -125,10 +125,10 @@ export class BotStatsCommand extends Command {
       const clan: IClan = await Clan.findOne({ name: clanName });
       if (!clan) return ErrorEmbed(message.channel, user, "that clan doesn't exist make sure you typed right!");
 
-      let wins = char.wins;
-      let clanUsers = clan.members.length;
-      let clanState = clan.open;
-      let clanMinimumTrophies = clan.minimumTrophies;
+      const wins = char.wins;
+      const clanUsers = clan.members.length;
+      const clanState = clan.open;
+      const clanMinimumTrophies = clan.minimumTrophies;
 
       if (!clanState) {
         return ErrorEmbed(message.channel, user, "that clan is closed!");
@@ -202,7 +202,7 @@ export class BotStatsCommand extends Command {
             .setDescription("Are you sure you want to leave your clan and delete it?\nThis action cannot be undone!")
             .setColor(BOT_ERROR_RGB_COLOR);
 
-          let msg = await message.channel.send({ embeds: [leaveEmbed], components: [row] });
+          const msg = await message.channel.send({ embeds: [leaveEmbed], components: [row] });
 
           const filter = (btnInt: Interaction) => {
             return user.id === btnInt.user.id;
@@ -242,7 +242,7 @@ export class BotStatsCommand extends Command {
             .setDescription("Are you sure you want to leave the clan and transfer ownership?\nThis action cannot be undone!")
             .setColor(BOT_ERROR_RGB_COLOR);
 
-          let msg = await message.channel.send({ embeds: [leaveEmbed], components: [row] });
+          const msg = await message.channel.send({ embeds: [leaveEmbed], components: [row] });
 
           const filter = (btnInt: Interaction) => {
             return user.id === btnInt.user.id;
@@ -293,7 +293,7 @@ export class BotStatsCommand extends Command {
           .setDescription("Are you sure you want to leave the clan?")
           .setColor(BOT_ERROR_RGB_COLOR);
         
-        let msg = await message.channel.send({ embeds: [leaveEmbed], components: [row] });
+        const msg = await message.channel.send({ embeds: [leaveEmbed], components: [row] });
 
         const filter = (btnInt: Interaction) => {
           return user.id === btnInt.user.id;

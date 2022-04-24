@@ -22,7 +22,7 @@ This bot has been made by Scorz#2993 add it [here](https://discord.com/api/oauth
 Version 1.0.0 is found on this [repository](https://github.com/GitScorz/kirito-bot) and it's made with javascript if you want see.
 
 ### Work
-- [x] Clan system;
+- [ ] Clan system;
 - [x] Inventory system;
 - [ ] Add multi-language system;
 - [ ] Fight system;

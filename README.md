@@ -7,7 +7,7 @@
 
 ### Installation
 
-1. Download the node modules with `yarn` or `npm install`;
+1. Download node modules with `yarn` or `npm install`;
 2. Rename the `.env.txt` file to `.env` and make sure you put the tokens there; 
 3. Configure the bot at `src/config/Config.ts` file;
 4. To build just type in console `yarn build` or `yarn watch`, you can use `node` too;

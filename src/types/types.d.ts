@@ -74,7 +74,7 @@ interface IClan {
   name: string;
   description: string;
   members: string[];
-  minimumWins: number;
+  minimumTrophies: number;
   open: boolean;
   level: number;
   ownerId: string;

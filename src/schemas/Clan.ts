@@ -4,7 +4,7 @@ const ClanSchema = new mongoose.Schema({
   name: mongoose.SchemaTypes.String,
   description: mongoose.SchemaTypes.String,
   members: mongoose.SchemaTypes.Array,
-  minimumWins: mongoose.SchemaTypes.Number,
+  minimumTrophies: mongoose.SchemaTypes.Number,
   open: mongoose.SchemaTypes.Boolean,
   level: mongoose.SchemaTypes.Number,
   ownerId: mongoose.SchemaTypes.String,

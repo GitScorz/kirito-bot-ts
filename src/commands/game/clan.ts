@@ -34,9 +34,20 @@ export class BotStatsCommand extends Command {
 
       const clan: IClan = await Clan.findOne({ _id: char.clanId });
 
+      let msg = `You are in the clan **${clan.name}**\n`;
+      msg += `\`\`\`\n${clan.description}\n\`\`\``;
+      msg += `\n\nState: ${clan.open ? "\`Open\` <:confirm:964494033177157652>" : "\`Closed\` <:nop:852118537735634965>" }`;
+      msg += `\nMembers: \`${clan.members.length}/${CLAN_MEMBER_LIMIT}\` 😊`;
+      msg += `\nMinimum Trophies: \`${clan.minimumTrophies}\` 🏆`;
+      msg += `\nLevel: \`${clan.level}\` 🏅`;
+
+      if (clan.ownerId === user.id) {
+        msg += `\n\nYou can manage your clan with \`k!clan manage\``;
+      }
+
       let clanEmbed = new MessageEmbed()
-        .setTitle("Clans")
-        .setDescription(`Your clan is ` + clan.name)
+        .setTitle("Clan Overview")
+        .setDescription(msg)
         .setColor(BOT_GLOBAL_RGB_COLOR);
 
       return message.channel.send({ embeds: [clanEmbed] });
@@ -72,7 +83,7 @@ export class BotStatsCommand extends Command {
           name: clanName,
           description: clanDescription,
           members: [user.id],
-          minimumWins: 0,
+          minimumTrophies: 0,
           open: true,
           level: 1,
           ownerId: user.id,
@@ -94,7 +105,7 @@ export class BotStatsCommand extends Command {
       let msg = `Your clan \`${clanName}\`has been created!`;
       // msg += "\n\nYou can now invite other members to your clan with \`k!clan invite <user_id>\`";
       msg += `\nYou can now tell your friends to join your clan with \`k!clan join ${clanName}\`.`;
-      msg += "\n\nSee your clan stats with \`k!clan\` and change the settings with \`k!clan settings\`.";
+      msg += "\n\nSee your clan stats with \`k!clan\` and manage it with \`k!clan manage\`.";
 
       const clanEmbed = new MessageEmbed()
         .setTitle("Clan Created!")
@@ -117,7 +128,7 @@ export class BotStatsCommand extends Command {
       let wins = char.wins;
       let clanUsers = clan.members.length;
       let clanState = clan.open;
-      let clanMinimumWins = clan.minimumWins;
+      let clanMinimumTrophies = clan.minimumTrophies;
 
       if (!clanState) {
         return ErrorEmbed(message.channel, user, "that clan is closed!");
@@ -127,8 +138,8 @@ export class BotStatsCommand extends Command {
         return ErrorEmbed(message.channel, user, "that clan is full!");
       }
 
-      if (clanMinimumWins > wins) {
-        return ErrorEmbed(message.channel, user, "you need `" + clanMinimumWins + "` wins to join that clan!");
+      if (clanMinimumTrophies > wins) {
+        return ErrorEmbed(message.channel, user, "you need `" + clanMinimumTrophies + "` trophies to join that clan!");
       }
 
       try {

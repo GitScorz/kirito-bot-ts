@@ -46,6 +46,10 @@ export class StartCommand extends Command {
         gems: 500,
         level: 1,
         exp: 0,
+        matches: 0,
+        trophies: 0,
+        wins: 0,
+        losses: 0,
         inventory: [
           {
             id: "welcome_book",

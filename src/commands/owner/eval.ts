@@ -25,7 +25,7 @@ export class EvalCommand extends Command {
       const output: string = eval(code);
 
       const embed = new MessageEmbed()
-        .setAuthor({ name: "Evaluate" })
+        .setTitle("Evaluation")
         .setColor(BOT_INVISIBLE_RGB_COLOR)
         .setDescription(`<:confirm:964494033177157652> Eval by **${user.username}**:` 
           + `\n\`\`\`js\n${output}\`\`\`` + "\n<:download:964493752997654568> Message sent:" 
@@ -36,7 +36,7 @@ export class EvalCommand extends Command {
     } catch (error) {
       const embed = new MessageEmbed()
         .setColor(BOT_INVISIBLE_RGB_COLOR)
-        .setAuthor({ name: "Error" })
+        .setTitle("Error")
         .setDescription(`${error}`)
         .setTimestamp();
 

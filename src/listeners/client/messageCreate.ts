@@ -35,7 +35,7 @@ export class MessageListener extends Listener {
 
     if (exp >= need) {  // If the user has enough exp to level up
       this.levelUp(user.id, need);
-      message.channel.send(`${user.username} has leveled up to level \`${level+1}\`!`);
+      // message.channel.send(`${user.username} has leveled up to level \`${level+1}\`!`);
     }
   }  // The run method is called when the listener is executed.
 

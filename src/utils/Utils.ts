@@ -78,3 +78,7 @@ export const BLACKLISTED_WORDS = [ // List of blacklisted words
   "nazi",
   "nazis",
 ]; 
+
+export function NeedExpFormula(level: number): number {
+  return ((5 * (Math.pow(level, 2))) + (50 * level)) + 10 + (Math.pow(level, 2) * 2);
+}

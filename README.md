@@ -19,7 +19,7 @@ This bot has been made by Scorz#2993 add it [here](https://discord.com/api/oauth
 
 ### Versions
 
-Version 1.0.0 is found on this [repository](https://github.com/GitScorz/kirito-bot) and it's made with javascript if you want see.
+Version 1.0.0 is found on this [repository](https://github.com/GitScorz/kirito-bot) and it's made with javascript if you want check it out.
 
 ### Work
 - [ ] Clan system;

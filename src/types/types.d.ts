@@ -81,3 +81,32 @@ interface IClan {
   createdAt: number;
   updatedAt: number;
 }
+
+interface IMatch {
+  _id: string;
+  startedSearching: number;
+  userId: string;
+  name: string;
+  inMatch: boolean;
+  msgId: string;
+  channelId: string;
+}
+
+interface IOponent {
+  id: string;
+  msgId: string;
+  channelId: string;
+  name: string;
+}
+
+interface IQuest {
+  _id: string;
+  name: string;
+  description: string;
+  progress: number;
+  required: number;
+  reward: number;
+  type: "kill" | "collect" | "craft" | "quest";
+  // createdAt: number;
+  // updatedAt: number;
+}

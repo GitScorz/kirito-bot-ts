@@ -28,3 +28,8 @@ export const BOT_PRESENCE: PresenceData = {
 
 export const CLAN_GEM_COST: number = 45;
 export const CLAN_MEMBER_LIMIT: number = 10;
+
+// MATCHES
+
+export const MATCH_UPDATE_INTERVAL: number = 10 * 1000; // 10 seconds
+export const MATCH_UPDATE_TIMES: number = 5; // 5 times

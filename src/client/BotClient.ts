@@ -1,6 +1,9 @@
-import { SapphireClient } from "@sapphire/framework";
+import { container, SapphireClient } from "@sapphire/framework";
 import { BOT_PREFIX, BOT_PRESENCE } from "../config/Config";
 import { Time } from "@sapphire/time-utilities";
+import { Mongoose } from "mongoose";
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export class BotClient extends SapphireClient {
   public constructor() {
@@ -25,7 +28,22 @@ export class BotClient extends SapphireClient {
     });
   }
 
-  public override login(token?: string): Promise<string> {
+  public override async login(token?: string): Promise<string> {
+    console.log(`NodeJS Version: ${process.version}`);
+
+    container.db = new Mongoose();
+    await container.db.connect(process.env.MONGO_URI)
+    .then(() => {
+      console.log("Database connection established.");
+    })
+    .catch((err) => console.error(err));
+
     return super.login(token);
   }  // Override the login method to use the token from the config file
+}
+
+declare module "@sapphire/pieces" {
+  interface Container {
+    db: Mongoose;
+  }
 }
